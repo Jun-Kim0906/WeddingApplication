@@ -29,6 +29,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.shopping_cart_outlined),
+        onPressed: (){},
       ),
     );
   }
