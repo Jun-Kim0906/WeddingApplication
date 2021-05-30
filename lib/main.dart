@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_wedding_test/blocs/authentication/bloc.dart';
 import 'package:my_wedding_test/blocs/my_bloc_observer.dart';
 import 'package:my_wedding_test/repository/user_repository.dart';
-import 'package:my_wedding_test/screens/home.dart';
+import 'package:my_wedding_test/screens/home_nav.dart';
 import 'package:my_wedding_test/screens/login.dart';
 import 'package:bloc/bloc.dart';
 import 'package:my_wedding_test/screens/splash.dart';
@@ -48,7 +48,7 @@ class _MyAppState extends State<MyApp> {
           home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
             builder: (context, state){
               if(state is AuthenticationSuccess){
-                return HomePage();
+                return HomeNav();
               }else if(state is AuthenticationInitial){
                 return SplashScreen();
               }else{
