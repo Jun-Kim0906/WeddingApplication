@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_wedding_test/blocs/authentication/bloc.dart';
-import 'package:my_wedding_test/screens/home.dart';
+import 'package:my_wedding_test/screens/home_nav.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomePage()),
+                                    builder: (context) => HomeNav()),
                               );
                             },
                             child: Text(
