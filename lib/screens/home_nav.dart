@@ -15,7 +15,10 @@ class HomeNav extends StatefulWidget {
 }
 
 class _HomeNavState extends State<HomeNav> {
-  User _user = UserUtil.getUser();
+  User user = UserUtil.getUser();
+  String name = UserUtil.getUser().name;
+  String hp = UserUtil.getUser().hp;
+
   int _selectedIndex = 0;
   PageController _pageController;
 
@@ -34,7 +37,6 @@ class _HomeNavState extends State<HomeNav> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Nav Bar")),
       body: SizedBox.expand(
         child: PageView(
           controller: _pageController,
@@ -65,8 +67,8 @@ class _HomeNavState extends State<HomeNav> {
             icon: Icon(Icons.apps),
           ),
           BottomNavigationBarItem(
-            label: 'Home',
-            icon: Icon(Icons.chat_bubble),
+            icon: Icon(Icons.apps),
+            label: ''
           ),
           BottomNavigationBarItem(
             label: 'Cart',
@@ -85,9 +87,6 @@ class _HomeNavState extends State<HomeNav> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      //
-      //
-      //using this page controller you can make beautiful animation effects
       _pageController.animateToPage(index,
           duration: Duration(milliseconds: 500), curve: Curves.easeOut);
     });
