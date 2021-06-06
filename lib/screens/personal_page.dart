@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:my_wedding_test/utils/user/user_util.dart';
 
 class PersonalPage extends StatefulWidget {
   const PersonalPage({Key key}) : super(key: key);
@@ -22,8 +23,8 @@ class _PersonalPageState extends State<PersonalPage> {
       //   )
       // ),
 
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: ListView(
+        //crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           SizedBox(height: 20),
           Row(
@@ -40,7 +41,8 @@ class _PersonalPageState extends State<PersonalPage> {
                   Padding(
                       padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
                       child: Text(
-                        "Pooh",
+                        UserUtil.getUser().name,
+                        //"Pooh",
                         style: TextStyle(
                             fontSize: 40, fontWeight: FontWeight.w400),
                       )),
