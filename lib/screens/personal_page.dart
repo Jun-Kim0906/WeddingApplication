@@ -26,6 +26,7 @@ class _PersonalPageState extends State<PersonalPage> {
         // 수정파트
         body: ListView(
           //crossAxisAlignment: CrossAxisAlignment.start,
+
           children: <Widget>[
             SizedBox(height: 20),
             Row(
@@ -43,7 +44,6 @@ class _PersonalPageState extends State<PersonalPage> {
                         padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
                         child: Text(
                           UserUtil.getUser().name,
-                          //"Pooh",
                           style: TextStyle(
                               fontSize: 40, fontWeight: FontWeight.w400),
                         )),
