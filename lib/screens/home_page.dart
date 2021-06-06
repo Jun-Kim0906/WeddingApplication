@@ -22,14 +22,15 @@ class _HomePageState extends State<HomePage> {
                 children: <Widget>[
                   new Expanded(child: new Container()),
                   new TabBar(
+                    labelColor: Colors.black,
+                    indicatorColor: Colors.black,
                     tabs: [
                       Tab(
                           icon: Icon(
                         Icons.directions_car,
                         color: Colors.black,
                       )),
-                      Tab(
-                          text: 'Studio',),
+                      Tab(text: 'Studio',),
                       Tab(text: 'Dress'),
                       Tab(text: 'Make up'),
                       Tab(text: 'Packages'),
