@@ -44,6 +44,8 @@ class _MyAppState extends State<MyApp> {
           title: 'MyWedding',
           theme: ThemeData(
             primarySwatch: Colors.teal,
+            primaryColor: Colors.teal,
+
           ),
           home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
             builder: (context, state){
