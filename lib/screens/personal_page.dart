@@ -23,7 +23,7 @@ class _PersonalPageState extends State<PersonalPage> {
         //   style: TextStyle(color: Colors.white),
         //   )
         // ),
-
+        // 수정파트
         body: ListView(
           //crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
