@@ -3,6 +3,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:my_wedding_test/utils/user/user_util.dart';
 
+import 'account_page.dart';
+
 class PersonalPage extends StatefulWidget {
   const PersonalPage({Key key}) : super(key: key);
 
@@ -13,24 +15,28 @@ class PersonalPage extends StatefulWidget {
 class _PersonalPageState extends State<PersonalPage> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return
+      // SafeArea(
+      // child:
+
+        Scaffold(
         resizeToAvoidBottomInset: false,
 
-        // appBar: AppBar(
-        //   centerTitle: true,
-        //   title: const Text('My account',
-        //   style: TextStyle(color: Colors.white),
-        //   )
-        // ),
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text('My account',
+          style: TextStyle(color: Colors.white),
+          )
+        ),
         body: ListView(
           children: <Widget>[
             SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
+                SizedBox(width: 20),
                 CircleAvatar(
-                  radius: 80,
+                  radius: 60,
                   backgroundColor: Colors.white,
                   backgroundImage: NetworkImage(
                       "https://cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/2TKUKXYMQF7ASZEUJLG7L4GM4I.jpg"),
@@ -45,8 +51,11 @@ class _PersonalPageState extends State<PersonalPage> {
                               fontSize: 40, fontWeight: FontWeight.w400),
                         )),
                     ElevatedButton(
+                      style: ButtonStyle(backgroundColor:  MaterialStateProperty.all<Color>(Colors.grey)),
+
                       onPressed: () {
                         print("Edit Button");
+
                       },
                       child: const Text("Edit account"),
                     )
@@ -74,12 +83,16 @@ class _PersonalPageState extends State<PersonalPage> {
                 ),
                 onPressed: () {
                   print("Account details");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Account_Page()),
+                  );
                 },
               ),
             ),
-
             Divider(
-              height: 30,
+              height: 20,
               thickness: 1,
               indent: 20,
               endIndent: 20,
@@ -89,61 +102,14 @@ class _PersonalPageState extends State<PersonalPage> {
               padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
               child: TextButton(
                 child: Text(
-                  "Card & offers",
+                  "My Orders",
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w300,
                       color: Colors.black),
                 ),
                 onPressed: () {
-                  print("Card & offers");
-                },
-              ),
-            ),
-
-            Divider(
-              height: 30,
-              thickness: 1,
-              indent: 20,
-              endIndent: 20,
-              // color: Colors.black,
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-              child: TextButton(
-                child: Text(
-                  "Notifications",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w300,
-                      color: Colors.black),
-                ),
-                onPressed: () {
-                  print("Notifications");
-                },
-              ),
-            ),
-
-
-            Divider(
-              height: 30,
-              thickness: 1,
-              indent: 20,
-              endIndent: 20,
-              // color: Colors.black,
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-              child: TextButton(
-                child: Text(
-                  "Payment information",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w300,
-                      color: Colors.black),
-                ),
-                onPressed: () {
-                  print("Payment information");
+                  print("My Orders");
                 },
               ),
             ),
@@ -171,7 +137,7 @@ class _PersonalPageState extends State<PersonalPage> {
             )
           ],
         ),
-      ),
-    );
+      );
+    // );
   }
 }
