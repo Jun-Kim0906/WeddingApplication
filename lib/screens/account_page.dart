@@ -9,10 +9,10 @@ class Account_Page extends StatefulWidget {
 }
 
 class _Account_PageState extends State<Account_Page> {
-  final TextEditingController idController = TextEditingController();
-  final TextEditingController pswController = TextEditingController();
+  final TextEditingController idController = TextEditingController(text: UserUtil.getUser().id);
+  final TextEditingController pswController = TextEditingController(text: UserUtil.getUser().pwd);
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController hpController = TextEditingController();
+  final TextEditingController hpController = TextEditingController(text: UserUtil.getUser().hp);
 
 
 
@@ -79,6 +79,7 @@ class _Account_PageState extends State<Account_Page> {
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 40, top: 20),
             child: TextFormField(
+              readOnly: true,
               controller: idController,
               decoration: const InputDecoration(
                 hintText: 'ID',
