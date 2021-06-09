@@ -9,6 +9,7 @@ import 'package:my_wedding_test/screens/home_nav.dart';
 import 'package:my_wedding_test/screens/login.dart';
 import 'package:bloc/bloc.dart';
 import 'package:my_wedding_test/screens/splash.dart';
+import 'package:my_wedding_test/wedding_theme_data.dart';
 
 void main() {
   Bloc.observer = MyBlocObserver();
@@ -42,11 +43,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'MyWedding',
-          theme: ThemeData(
-            primarySwatch: Colors.teal,
-            primaryColor: Colors.teal,
-
-          ),
+          theme: WeddingThemeData.lightThemeData,
           home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
             builder: (context, state){
               if(state is AuthenticationSuccess){

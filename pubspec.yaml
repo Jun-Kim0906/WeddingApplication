@@ -17,6 +17,9 @@ dependencies:
   equatable: ^1.2.6
   flutter_bloc: ^6.1.2
   flutter_svg: ^0.22.0
+  google_fonts: ^2.0.0
+  carousel_slider: ^3.0.0
+
 
 dev_dependencies:
   flutter_test:
@@ -30,3 +33,4 @@ flutter:
     - assets/
     - assets/wedding/
     - assets/logo/
+    - assets/svgIcons/

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:my_wedding_test/models/user/user_model.dart';
 import 'package:my_wedding_test/screens/cart_page.dart';
 import 'package:my_wedding_test/screens/detail_page.dart';
@@ -44,9 +45,9 @@ class _HomeNavState extends State<HomeNav> {
             setState(() => _selectedIndex = index);
           },
           children: <Widget>[
+            HomePage(),
             SearchPage(),
             DetailPage(),
-            HomePage(),
             CartPage(),
             PersonalPage(),
           ],
@@ -55,38 +56,37 @@ class _HomeNavState extends State<HomeNav> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.black,
+        unselectedItemColor: Color(0xffE5E5E5),
         onTap: _onItemTapped,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-              label: 'Search',
-              icon: Icon(Icons.home)
+            label: 'Home',
+            icon: SvgPicture.asset(
+              'assets/svgIcons/home_heart.svg',
+              color: _selectedIndex == 0 ? Colors.black : Color(0xffe5e5e5),
+            ),
           ),
           BottomNavigationBarItem(
-            label: 'Detail',
-            icon: Icon(Icons.apps),
+            label: 'Search',
+            icon: Icon(Icons.search_rounded),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.apps),
-            label: ''
-          ),
+              icon: Icon(Icons.favorite), label: 'Wish List'),
           BottomNavigationBarItem(
             label: 'Cart',
-            icon: Icon(Icons.settings),
+            icon: Icon(Icons.shopping_cart),
           ),
           BottomNavigationBarItem(
             label: 'Personal',
-            icon: Icon(Icons.settings),
+            icon: Icon(Icons.person_sharp),
           ),
         ],
       ),
     );
   }
 
-
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
       _pageController.animateToPage(index,
           duration: Duration(milliseconds: 500), curve: Curves.easeOut);
     });
