@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:my_wedding_test/screens/home_screens/home_dress_page.dart';
+import 'package:my_wedding_test/screens/home_screens/home_main_page.dart';
+import 'package:my_wedding_test/screens/home_screens/home_make_up_page.dart';
+import 'package:my_wedding_test/screens/home_screens/home_package_page.dart';
+import 'package:my_wedding_test/screens/home_screens/home_studio_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -22,15 +26,18 @@ class _HomePageState extends State<HomePage> {
                 children: <Widget>[
                   new Expanded(child: new Container()),
                   new TabBar(
+                    isScrollable: true,
                     labelColor: Colors.black,
                     indicatorColor: Colors.black,
                     tabs: [
                       Tab(
                           icon: Icon(
-                        Icons.directions_car,
+                        Icons.home,
                         color: Colors.black,
                       )),
-                      Tab(text: 'Studio',),
+                      Tab(
+                        text: 'Studio',
+                      ),
                       Tab(text: 'Dress'),
                       Tab(text: 'Make up'),
                       Tab(text: 'Packages'),
@@ -43,11 +50,11 @@ class _HomePageState extends State<HomePage> {
         ),
         body: TabBarView(
           children: [
-            Icon(Icons.directions_car),
-            Icon(Icons.directions_transit),
-            Icon(Icons.directions_bike),
-            Icon(Icons.directions_bike),
-            SvgPicture.asset('assets/svgIcons/Heart.svg'),
+            HomeMainPage(),
+            HomeStudioPage(),
+            HomeDressPage(),
+            HomeMakeUpPage(),
+            HomePackagePage(),
           ],
         ),
       ),
