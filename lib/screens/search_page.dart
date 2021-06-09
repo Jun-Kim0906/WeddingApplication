@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mysql1/mysql1.dart';
 
+
+
+
+var db =Mysql();
+List<String> storelist =[];
+List<int> ratinglist =[];
+List<String> desclist = [];
+
 class SearchPage extends StatefulWidget {
   const SearchPage({Key key}) : super(key: key);
 
@@ -26,7 +34,7 @@ class _SearchPageState extends State<SearchPage> {
       ),
       body: Column(
         children: [
-          _searchBar(context),
+          searchBar(),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Align(
@@ -36,12 +44,23 @@ class _SearchPageState extends State<SearchPage> {
                 )
             ),
           ),
-          Container(
-            child: Column(
-              children: [
-                Text('recent1'),
-                Text('recent2'),
-              ],
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Container(
+              child: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Column(
+                      children: [
+                        Text('recent1'),
+                        Text('recent2'),
+                      ],
+                    ),
+                  )
+
+                ],
+              ),
             ),
           ),
           Padding(
@@ -61,59 +80,45 @@ class _SearchPageState extends State<SearchPage> {
   }
 }
 
-_searchBar(BuildContext context){
-  return Padding(
-    padding: EdgeInsets.all(8.0),
-    child: TextField(
-      decoration: InputDecoration(
-        icon: Icon(Icons.search),
-        hintText: 'Search...'
-      ),
-      onTap: ()async{
-        getstorename();
-        final result = await showSearch(context: context, delegate: searchitem(storelist));
-        print(result);
-      },
-    ),
-  );
+class searchBar extends StatefulWidget {
+  @override
+  _searchBarState createState() => _searchBarState();
 }
 
-class Mysql {
-  static String host = 'dbproject.cft5govn0dbt.ap-northeast-2.rds.amazonaws.com',
-      user = 'admin',
-      password = '12341234',
-      db = 'Data';
-  static int port = 3306;
-  Mysql();
-  Future<MySqlConnection> getConnection() async {
-    var settings = new ConnectionSettings(
-        host : host,
-        port : port,
-        user : user,
-        password:password,
-        db : db
-    );
-    return await MySqlConnection.connect(settings);
-  }
-}
-
-var db =Mysql();
-List<String> storelist =[];
-List<int> ratinglist =[];
-void getstorename(){
-  db.getConnection().then((conn){
-    String sql = 'select storename from Data.minseoktest;';
-    conn.query(sql).then((result){
-      for(var row in result){
-        storelist.add(row[0]);
-      }
+class _searchBarState extends State<searchBar> {
+  getAllStore()async{
+    db.getConnection().then((conn){
+      String sql = 'select storename from Data.minseoktest;';
+      conn.query(sql).then((result){
+        for(var row in result){
+          storelist.add(row[0]);
+        }
+      });
     });
-  });
-}
+    return storelist;
+  }
+  @override
+  void initState(){
+    super.initState();
+    getAllStore();
+  }
 
-
-void removelist() {
-  storelist.removeRange(0, storelist.length);
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: TextField(
+        decoration: InputDecoration(
+            icon: Icon(Icons.search),
+            hintText: 'Search...'
+        ),
+        onTap: ()async{
+          final result = await showSearch(context: context, delegate: searchitem(storelist));
+          print(result);
+        },
+      ),
+    );
+  }
 }
 
 class searchitem extends SearchDelegate<String>{
@@ -135,7 +140,6 @@ class searchitem extends SearchDelegate<String>{
 
     return IconButton(
       onPressed: (){
-        removelist();
         close(context, result);
       },
       icon: Icon(Icons.arrow_back),);
@@ -154,7 +158,6 @@ class searchitem extends SearchDelegate<String>{
           title: Text(suggestions.elementAt(index)),
           onTap: (){
             result = suggestions.elementAt(index);
-            //close(context, result);
           },
         );
       },
@@ -179,7 +182,6 @@ class searchitem extends SearchDelegate<String>{
       },
     );
   }
-
 }
 
 
@@ -189,16 +191,24 @@ class ListViewPage extends StatefulWidget {
 }
 
 class _ListViewPageState extends State<ListViewPage> {
-  // Title List Here
-  var titleList = [
-    "Success",
-    "Motivation",
-    "Hard Work",
-    "Decision",
-    "Confidence",
-    "Business",
-    "Team Work"
-  ];
+
+  getAllStore()async{
+    db.getConnection().then((conn){
+      String sql = 'select storename from Data.ttt order by rating desc limit 10;';
+      conn.query(sql).then((result){
+        for(var row in result){
+          storelist.add(row[0]);
+        }
+      });
+    });
+    return storelist;
+  }
+  @override
+  void initState(){
+    super.initState();
+    getAllStore();
+  }
+
 
 
   // Description List Here
@@ -209,7 +219,6 @@ class _ListViewPageState extends State<ListViewPage> {
     "Sometimes it's the smallest decisions that can change your life forever.",
     "Confidence is the most beautiful thing you can possess",
     "A big business starts small.",
-    "Talent wins games, but teamwork and intelligence win championships."
   ];
 
   // Image Name List Here
@@ -220,7 +229,6 @@ class _ListViewPageState extends State<ListViewPage> {
     "assets/logo/logo_transparent.png",
     "assets/logo/logo_transparent.png",
     "assets/logo/logo_transparent.png",
-    "assets/logo/logo_transparent.png"
   ];
 
   @override
@@ -228,11 +236,13 @@ class _ListViewPageState extends State<ListViewPage> {
     // MediaQuery to get Device Width
     double width = MediaQuery.of(context).size.width * 0.6;
     return ListView.builder(
-        itemCount: imgList.length,
+        itemCount: storelist.length,
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
               // This Will Call When User Click On ListView Item
+              print(storelist.length);
+              print(desclist.length);
 
             },
             // Card Which Holds Layout Of ListView Item
@@ -250,7 +260,7 @@ class _ListViewPageState extends State<ListViewPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          titleList[index],
+                          storelist[index],
                           style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
@@ -282,3 +292,24 @@ class _ListViewPageState extends State<ListViewPage> {
 }
 
 // This is a block of Model Dialog
+
+
+
+class Mysql {
+  static String host = 'dbproject.cft5govn0dbt.ap-northeast-2.rds.amazonaws.com',
+      user = 'admin',
+      password = '12341234',
+      db = 'Data';
+  static int port = 3306;
+  Mysql();
+  Future<MySqlConnection> getConnection() async {
+    var settings = new ConnectionSettings(
+        host : host,
+        port : port,
+        user : user,
+        password:password,
+        db : db
+    );
+    return await MySqlConnection.connect(settings);
+  }
+}
