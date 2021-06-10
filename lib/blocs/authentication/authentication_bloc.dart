@@ -12,11 +12,9 @@ part 'authentication_event.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
-  final UserRepository _userRepository;
 
   AuthenticationBloc({@required UserRepository userRepository})
       : assert(userRepository != null),
-        _userRepository = userRepository,
         super(AuthenticationInitial());
 
   @override
@@ -51,6 +49,5 @@ class AuthenticationBloc
 
   Stream<AuthenticationState> _mapAuthenticationLoggedOutToState() async* {
     yield AuthenticationProgressing();
-    _userRepository.signOut();
   }
 }

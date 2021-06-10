@@ -14,6 +14,10 @@ class UserUtil {
     _user = user;
   }
 
+  static void setUserWithUser(User user){
+    _user = user;
+  }
+
   static User getUser() {
     return _user;
   }
