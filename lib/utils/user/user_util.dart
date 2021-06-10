@@ -9,8 +9,8 @@ class UserUtil {
       pwd: resultRow.fields['pwd'],
       name: resultRow.fields['name'],
       hp: resultRow.fields['hp'],
+      email: resultRow.fields['email'],
     );
-
     _user = user;
   }
 

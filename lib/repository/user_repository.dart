@@ -8,7 +8,7 @@ class UserRepository {
       port: 3306,
       user: 'admin',
       password: '12341234',
-      db: 'test');
+      db: 'weddingApp');
 
   Future<ResultRow> signIn(String id, String password) async {
     var conn = await MySqlConnection.connect(settings);
@@ -26,9 +26,9 @@ class UserRepository {
     return results.isEmpty;
   }
 
-  Future<void> signUp({String id, String password, String name, String hp}) async {
+  Future<void> signUp({String id, String password, String name, String hp, String email}) async {
     var conn = await MySqlConnection.connect(settings);
-    await conn.query('insert into user(id, pwd, name, hp) values (?,?,?,?)',[id,password,name,hp]);
+    await conn.query('insert into user(id, pwd, name, hp, email) values (?,?,?,?,?)',[id,password,name,hp, email]);
   }
 
   Future<void> signInWithCredentials(String id, String password) {
