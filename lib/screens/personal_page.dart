@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_wedding_test/blocs/authentication/authentication_bloc.dart';
 import 'package:my_wedding_test/utils/user/user_util.dart';
 
 import 'account_page.dart';
@@ -17,8 +20,10 @@ class _PersonalPageState extends State<PersonalPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: ListView(
+        resizeToAvoidBottomInset: false,
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15.0),
+          child: ListView(
             children: <Widget>[
               SizedBox(height: 20),
               Row(
@@ -31,104 +36,115 @@ class _PersonalPageState extends State<PersonalPage> {
                     backgroundImage: NetworkImage(
                         "https://cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/2TKUKXYMQF7ASZEUJLG7L4GM4I.jpg"),
                   ),
-                  Column(
-                    children: <Widget>[
-                      Padding(
-                          padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-                          child: Text(
-                            UserUtil.getUser().name,
-                            style: TextStyle(
-                                fontSize: 40, fontWeight: FontWeight.w400),
-                          )),
-                      ElevatedButton(
-                        style: ButtonStyle(backgroundColor:  MaterialStateProperty.all<Color>(Colors.grey)),
-
-                        onPressed: () {
-                          print("Edit Button");
-
-                        },
-                        child: const Text("Edit account"),
-                      )
-                    ],
+                  Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          UserUtil.getUser().name,
+                          style: TextStyle(
+                              fontSize: 40, fontWeight: FontWeight.w400),
+                        ),
+                        SizedBox(height: 15.0,),
+                        Text(
+                          '@${UserUtil.getUser().id}',
+                          style: TextStyle(
+                              fontSize: 15.0, fontWeight: FontWeight.w400, color: Color(0xa0000000)),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-
               Divider(
                 height: 30,
                 thickness: 1,
                 indent: 20,
                 endIndent: 20,
-                // color: Colors.black,
               ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                child: TextButton(
-                  child: Text(
-                    "Account details",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.black),
-                  ),
-                  onPressed: () {
-                    print("Account details");
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Account_Page()),
-                    );
-                  },
+              TextButton(
+                child: Text(
+                  "Account details",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.black),
                 ),
+                onPressed: () {
+                  print("Account details");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AccountPage()),
+                  );
+                },
               ),
               Divider(
                 height: 20,
                 thickness: 1,
                 indent: 20,
                 endIndent: 20,
-                // color: Colors.black,
               ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                child: TextButton(
-                  child: Text(
-                    "My Orders",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.black),
-                  ),
-                  onPressed: () {
-                    print("My Orders");
-                  },
+              TextButton(
+                child: Text(
+                  "My Orders",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.black),
                 ),
+                onPressed: () {
+                  print("My Orders");
+                },
               ),
               Divider(
                 height: 20,
                 thickness: 1,
                 indent: 20,
                 endIndent: 20,
-                // color: Colors.black,
               ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                child: TextButton(
-                  child: Text(
-                    "Logout",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.black),
-                  ),
-                  onPressed: () {
-                    print("Logout Button");
-                  },
+              TextButton(
+                child: Text(
+                  "Logout",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.black),
                 ),
+                onPressed: () {
+                  _showAlert(title: '로그아웃', message: '로그아웃 하시겠습니까?');
+                },
               )
             ],
           ),
         ),
+      ),
     );
     // );
+  }
+  void _showAlert({String title, String message}) {
+    showCupertinoDialog(
+        context: context,
+        builder: (context) {
+          return CupertinoAlertDialog(
+            title: Text(title),
+            content: Text(message),
+            actions: [
+              CupertinoDialogAction(
+                isDefaultAction: false,
+                  child: Text("예"),
+                  onPressed: () {
+                    BlocProvider.of<AuthenticationBloc>(context).add(AuthenticationLoggedOut());
+                    Navigator.pop(context);
+                  }),
+              CupertinoDialogAction(
+                  isDefaultAction: true,
+                  child: Text("아니오"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  })
+            ],
+          );
+        });
   }
 }

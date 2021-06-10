@@ -10,9 +10,15 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
 
-  String id, password, confirmPassword, hp1, hp2, hp3, name;
+  String id, password, confirmPassword, name, email;
+  String hp1 = '010';
+  String hp2 = '';
+  String hp3 = '';
 
   Color greenColor = Color(0xFF00AF19);
+
+  TextStyle _labelTextStyle =
+      TextStyle(fontSize: 12.0, color: Colors.grey.withOpacity(0.9));
 
   //To check fields during submit
   checkFields() {
@@ -61,10 +67,7 @@ class _RegisterPageState extends State<RegisterPage> {
           TextFormField(
               decoration: InputDecoration(
                   labelText: '아이디',
-                  labelStyle: TextStyle(
-                      fontFamily: 'Trueno',
-                      fontSize: 12.0,
-                      color: Colors.grey.withOpacity(0.5)),
+                  labelStyle: _labelTextStyle,
                   focusedBorder: UnderlineInputBorder(
                     borderSide:
                         BorderSide(color: Theme.of(context).primaryColor),
@@ -76,10 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
           TextFormField(
               decoration: InputDecoration(
                   labelText: '비밀번호',
-                  labelStyle: TextStyle(
-                      fontFamily: 'Trueno',
-                      fontSize: 12.0,
-                      color: Colors.grey.withOpacity(0.5)),
+                  labelStyle: _labelTextStyle,
                   focusedBorder: UnderlineInputBorder(
                     borderSide:
                         BorderSide(color: Theme.of(context).primaryColor),
@@ -92,10 +92,7 @@ class _RegisterPageState extends State<RegisterPage> {
           TextFormField(
               decoration: InputDecoration(
                   labelText: '비밀번호 확인',
-                  labelStyle: TextStyle(
-                      fontFamily: 'Trueno',
-                      fontSize: 12.0,
-                      color: Colors.grey.withOpacity(0.5)),
+                  labelStyle: _labelTextStyle,
                   focusedBorder: UnderlineInputBorder(
                     borderSide:
                         BorderSide(color: Theme.of(context).primaryColor),
@@ -112,10 +109,7 @@ class _RegisterPageState extends State<RegisterPage> {
           TextFormField(
               decoration: InputDecoration(
                   labelText: '이름',
-                  labelStyle: TextStyle(
-                      fontFamily: 'Trueno',
-                      fontSize: 12.0,
-                      color: Colors.grey.withOpacity(0.5)),
+                  labelStyle: _labelTextStyle,
                   focusedBorder: UnderlineInputBorder(
                     borderSide:
                         BorderSide(color: Theme.of(context).primaryColor),
@@ -124,6 +118,82 @@ class _RegisterPageState extends State<RegisterPage> {
                 this.name = value;
               },
               validator: (value) => value.isEmpty ? '이름을 입력해 주세요' : null),
+          TextFormField(
+            decoration: InputDecoration(
+                labelText: '이메일',
+                labelStyle: _labelTextStyle,
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                )),
+            onChanged: (value) {
+              this.email = value;
+            },
+            validator: (value) => value.isEmpty
+                ? '이메일 주소를 입력해 주세요'
+                : !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                        .hasMatch(value)
+                    ? '올바른 이메일 형식이 아닙니다.'
+                    : null,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Expanded(
+                flex: 1,
+                child: TextFormField(
+                    initialValue: '010',
+                    decoration: InputDecoration(
+                        labelText: '휴대폰',
+                        labelStyle: _labelTextStyle,
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Theme.of(context).primaryColor),
+                        )),
+                    onChanged: (value) {
+                      this.hp1 = value;
+                    },
+                    validator: (value) {
+                      if (value.isEmpty || hp2.isEmpty || hp3.isEmpty) {
+                        return '휴대폰 번호를 입력해 주세요';
+                      } else {
+                        return null;
+                      }
+                    }),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 10.0, bottom: 8.0, right: 10.0),
+                child: Text('-'),
+              ),
+              Expanded(
+                flex: 1,
+                child: TextFormField(onChanged: (value) {
+                  this.hp2 = value;
+                }, validator: (value) {
+                  if (hp1.isEmpty || hp2.isEmpty || hp3.isEmpty) {
+                    return '';
+                  } else {
+                    return null;
+                  }
+                }),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 10.0, bottom: 8.0, right: 10.0),
+                child: Text('-'),
+              ),
+              Expanded(
+                flex: 1,
+                child: TextFormField(onChanged: (value) {
+                  this.hp3 = value;
+                }, validator: (value) {
+                  if (hp1.isEmpty || hp2.isEmpty || hp3.isEmpty) {
+                    return '';
+                  } else {
+                    return null;
+                  }
+                }),
+              ),
+            ],
+          ),
           SizedBox(height: 50.0),
           GestureDetector(
             onTap: () async {
@@ -176,7 +246,7 @@ class _RegisterPageState extends State<RegisterPage> {
           Navigator.pop(context);
         });
     await UserRepository()
-        .signUp(id: id, password: password, name: name, hp: '010-1111-1111');
+        .signUp(id: id, password: password, name: name, hp: '$hp1-$hp2-$hp3', email: email);
   }
 
   void _showAlert({String title, String message, VoidCallback onPressed}) {
