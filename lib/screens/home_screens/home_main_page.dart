@@ -21,9 +21,10 @@ class _HomeMainPageState extends State<HomeMainPage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 0.0),
+      padding: EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
       child: ListView(
         children: [
+          SizedBox(height: 10.0,),
           MainCarousel(
               carouselController: _carouselController, imgList: imgList),
           SizedBox(
