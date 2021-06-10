@@ -31,35 +31,8 @@ class UserRepository {
     await conn.query('insert into user(id, pwd, name, hp, email) values (?,?,?,?,?)',[id,password,name,hp, email]);
   }
 
-  Future<void> signInWithCredentials(String id, String password) {
-    // return _firebaseAuth.signInWithEmailAndPassword(
-    //   email: id,
-    //   password: password,
-    // );
+  Future<void> updateUser({String id,String password, String email, String hp}) async{
+    var conn = await MySqlConnection.connect(settings);
+    await conn.query('update user set pwd = ?, email = ?, hp = ? where id = ?',[password, email, hp, id]);
   }
-
-  Future<void> signOut() async {
-    return Future.wait([
-      // _firebaseAuth.signOut(),
-    ]);
-  }
-
-// Future<User> getUser() async {
-//   return (_firebaseAuth.currentUser);
-// }
-//
-// Future<void> resetPassword({String changed, String prev}) async {
-//   final currentUser = await _firebaseAuth.currentUser;
-//   UserCredential authResult = await currentUser.reauthenticateWithCredential(
-//     EmailAuthProvider.credential(
-//       email: await UserUtil.getUser().id,
-//       password: prev,
-//     ),
-//   );
-//   await authResult.user.updatePassword(changed).then((_) {
-//     print('Successfully changed password');
-//   }).catchError((error) {
-//     print("Password can't be changed: " + error.toString());
-//   });
-// }
 }
