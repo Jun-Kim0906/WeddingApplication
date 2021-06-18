@@ -44,16 +44,17 @@ class CryptoData {
       'value': '\$12.279'
     },
 
+    {
+    'name': 'Ethereum',
+    'symbol': 'ETH',
+    'icon': Icons.add,
+    'iconColor': Colors.black,
+    'change': '+5.2%',
+    'changeValue': '25.567',
+    'changeColor': Colors.green,
+    'value': '\$7.809'},
 
 
-    // {
-    // ‘name’: ‘Ethereum’,
-    // ‘symbol’: ‘ETH’,
-    // ‘icon’: CryptoFontIcons.ETH,
-    // ‘iconColor’: Colors.black,
-    // ‘change’: ‘+5.2%’,
-    // ‘changeValue’: ‘25.567’,
-    // ‘changeColor’: Colors.green,
-    // ‘value’: ‘\$7.809’},
   ];
+
 }

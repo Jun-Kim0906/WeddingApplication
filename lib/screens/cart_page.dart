@@ -15,9 +15,12 @@ class _CartPageState extends State<CartPage> {
 
   // 1) 데이터를 여기서 불러오면 됍니다.
   var cryptoData = CryptoData.getData;
+  var last_index;
 
   @override
   Widget build(BuildContext context) {
+    last_index =  cryptoData.length - 1;
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
           appBar: AppBar(
@@ -46,7 +49,7 @@ class _CartPageState extends State<CartPage> {
               Expanded(
                 child: ListView.builder(
 // scrollDirection: Axis.horizontal,
-                    itemCount: cryptoData.length,
+                    itemCount: cryptoData.length, // 맨 마지막 데이터를 total로 잡아놓음.
                     itemBuilder: (context, index) {
                       return Container(
                         padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
@@ -113,12 +116,95 @@ class _CartPageState extends State<CartPage> {
                       );
                     }),
               ),
+              SizedBox(
+                height: 10,
+              ),
 
+              // Recepit 입니다.
+              Container(
+                child: Card(
+                  elevation: 5,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        top: BorderSide(
+                            width: 2.0,
+                            //color: cryptoData[index]['iconColor']
+                            //color: Theme.of(context).colorScheme.primary
+                            color: Colors.black
+                        ),
+                      ),
+                      color: Colors.white,
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(7),
+                      child: Stack(children: <Widget>[
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Stack(
+                            children: <Widget>[
+                              Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 20, top: 5),
+                                  child: Column(
+                                    //mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      RichText(
+                                          text: TextSpan(
+                                              text: 'Recepit',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold, color: Colors.black, fontSize: 30)
+                                          )
+                                      ),
+                                      SizedBox(height: 10,),
+                                      RichText(
+                                          text: TextSpan(
+                                              text: '상품개수: ${cryptoData.length}',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold, color: Colors.black, fontSize: 20)
+                                          )
+                                      ),
+                                      //SizedBox(height: 10,),
 
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          RichText(
+                                              text: TextSpan(
+                                                  text: 'Total: \$1000.809',
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.bold, color: Colors.black, fontSize: 20)
+                                              )
+                                          ),
 
+                                          ElevatedButton(
+                                            style: ButtonStyle(backgroundColor:  MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.primary)),
+
+                                            onPressed: () {
+                                              print("Edit Button");
+                                            },
+                                            child: const Text("구매하기"),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ))
+                            ],
+                          ),
+                        )
+                      ]),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         )
+
+
+
+
     );
   }
     //);
