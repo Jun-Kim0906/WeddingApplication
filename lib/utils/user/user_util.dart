@@ -10,6 +10,7 @@ class UserUtil {
       name: resultRow.fields['name'],
       hp: resultRow.fields['hp'],
       email: resultRow.fields['email'],
+      image: resultRow.fields['image'],
     );
     _user = user;
   }

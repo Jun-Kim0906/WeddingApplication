@@ -49,3 +49,5 @@ class WeddingThemeData {
     brightness: Brightness.light,
   );
 }
+
+const defaultPadding = 15.0;
