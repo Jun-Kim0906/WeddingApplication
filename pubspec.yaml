@@ -20,6 +20,8 @@ dependencies:
   google_fonts: ^2.0.0
   carousel_slider: ^3.0.0
   flutter_multi_formatter: ^2.2.0
+  image_picker: ^0.8.0+3
+  image: ^3.0.2
 
 
 dev_dependencies:

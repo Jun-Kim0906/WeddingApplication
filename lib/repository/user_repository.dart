@@ -31,8 +31,8 @@ class UserRepository {
     await conn.query('insert into user(id, pwd, name, hp, email) values (?,?,?,?,?)',[id,password,name,hp, email]);
   }
 
-  Future<void> updateUser({String id,String password, String email, String hp}) async{
+  Future<void> updateUser({String id,String password, String email, String hp, Blob image}) async{
     var conn = await MySqlConnection.connect(settings);
-    await conn.query('update user set pwd = ?, email = ?, hp = ? where id = ?',[password, email, hp, id]);
+    await conn.query('update user set pwd = ?, email = ?, hp = ?, image = ? where id = ?',[password, email, hp, image, id]);
   }
 }
