@@ -1,9 +1,9 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_wedding_test/models/user/user_model.dart';
 import 'package:my_wedding_test/repository/user_repository.dart';
 import 'package:my_wedding_test/utils/user/user_util.dart';
+import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({Key key}) : super(key: key);
@@ -18,6 +18,13 @@ class _AccountPageState extends State<AccountPage> {
   User _user = UserUtil.getUser();
 
   String password, confirmPassword, email, hp;
+  // PhoneCountryData _countryData;
+  //
+  // void _onCountrySelected(PhoneCountryData countryData) {
+  //   setState(() {
+  //     _countryData = countryData;
+  //   });
+  // }
 
   bool checkFields() {
     final form = _formKey.currentState;
@@ -67,21 +74,18 @@ class _AccountPageState extends State<AccountPage> {
                             hp: hp);
                         Navigator.pop(context);
                         UserUtil.setUserWithUser(User(
-                          id: _user.id,
-                          pwd: password,
-                          hp: hp,
-                          email: email,
-                          name: _user.name
-                        ));
+                            id: _user.id,
+                            pwd: password,
+                            hp: hp,
+                            email: email,
+                            name: _user.name));
                         _showAlert2(
-                          title: '변경완료',
-                          message: '정보 변경이 완료되었습니다!',
-                          onPressed: (){
-                            Navigator.pop(context);
-                          }
-                        );
+                            title: '변경완료',
+                            message: '정보 변경이 완료되었습니다!',
+                            onPressed: () {
+                              Navigator.pop(context);
+                            });
                       });
-
                 }
               },
               child: Text('변경하기')),
@@ -156,7 +160,7 @@ class _AccountPageState extends State<AccountPage> {
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
                 child: TextFormField(
-                  initialValue: password,
+                    initialValue: password,
                     obscureText: true,
                     decoration: const InputDecoration(
                       hintText: '패스워드 변경',
@@ -171,7 +175,7 @@ class _AccountPageState extends State<AccountPage> {
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
                 child: TextFormField(
-                  initialValue: confirmPassword,
+                    initialValue: confirmPassword,
                     obscureText: true,
                     decoration: const InputDecoration(
                       hintText: '패스워드 확인',
@@ -208,7 +212,9 @@ class _AccountPageState extends State<AccountPage> {
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
                 child: TextFormField(
-                  initialValue: hp,
+                    smartDashesType: SmartDashesType.enabled,
+                    keyboardType: TextInputType.phone,
+                    initialValue: hp,
                     decoration: const InputDecoration(
                       hintText: '전화번호',
                       labelText: '전화번호',
@@ -217,7 +223,13 @@ class _AccountPageState extends State<AccountPage> {
                       this.hp = value;
                     },
                     validator: (value) =>
-                        value.isEmpty ? '휴대폰 번호를 입력해 주세요' : null),
+                        value.isEmpty ? '휴대폰 번호를 입력해 주세요' : null,
+                  inputFormatters: [
+                    PhoneInputFormatter(
+                      // onCountrySelected: _onCountrySelected,
+                    )
+                  ],
+                ),
               ),
             ],
           ),
@@ -228,9 +240,9 @@ class _AccountPageState extends State<AccountPage> {
 
   void _showAlert(
       {String title,
-        String message,
-        VoidCallback onPressed1,
-        VoidCallback onPressed2}) {
+      String message,
+      VoidCallback onPressed1,
+      VoidCallback onPressed2}) {
     showCupertinoDialog(
         context: context,
         builder: (context) {
@@ -251,10 +263,7 @@ class _AccountPageState extends State<AccountPage> {
         });
   }
 
-  void _showAlert2(
-      {String title,
-        String message,
-        VoidCallback onPressed}) {
+  void _showAlert2({String title, String message, VoidCallback onPressed}) {
     showCupertinoDialog(
         context: context,
         builder: (context) {
@@ -264,7 +273,7 @@ class _AccountPageState extends State<AccountPage> {
             actions: [
               CupertinoDialogAction(
                   isDefaultAction: true,
-                  child: Text("취소"),
+                  child: Text("확인"),
                   onPressed: onPressed)
             ],
           );
