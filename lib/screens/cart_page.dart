@@ -21,6 +21,8 @@ class _CartPageState extends State<CartPage> {
   Widget build(BuildContext context) {
     last_index =  cryptoData.length - 1;
 
+
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
           appBar: AppBar(
@@ -51,65 +53,80 @@ class _CartPageState extends State<CartPage> {
 // scrollDirection: Axis.horizontal,
                     itemCount: cryptoData.length, // 맨 마지막 데이터를 total로 잡아놓음.
                     itemBuilder: (context, index) {
-                      return Container(
-                        padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                        height: 220,
-                        width: double.maxFinite,
-                        child: Card(
-                          elevation: 5,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border(
-                                top: BorderSide(
-                                    width: 2.0,
-                                    //color: cryptoData[index]['iconColor']
-                                    color: Theme.of(context).colorScheme.primary
-                                ),
-                              ),
-                              color: Colors.white,
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(7),
-                              child: Stack(children: <Widget>[
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Stack(
-                                    children: <Widget>[
-                                      Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10, top: 5),
-                                          child: Column(
-                                            children: <Widget>[
-                                              Row(
-                                                children: <Widget>[
-                                                  //cryptoIcon(cryptoData[index]),
-                                                  SizedBox(height: 10, width: 10,),
-                                                  cryptoNameSymbol(cryptoData[index]),
-                                                  // Spacer(),
-                                                  // cryptoChange(cryptoData[index]),
-                                                  // SizedBox(width: 10,),
-                                                  // changeIcon(cryptoData[index]),
-                                                  // SizedBox(width: 20,)
-                                                ],
-                                              ),
-
-                                              SizedBox(height: 13,),
-
-                                              Row(
-                                                children: <Widget>[
-                                                  Image.network(
-                                                      "http://img.marieclairekorea.com/2020/07/mck_5f22549fe9977.jpg"
-                                                      // ,height:
-                                                      ,width: 180),
-                                                  cryptoAmount(cryptoData[index])
-                                                ],
-                                              )
-                                            ],
-                                          ))
-                                    ],
+                      return Dismissible(
+                        // key: Key(cryptoData[index].toString()),
+                        key: UniqueKey(),
+                        direction: DismissDirection.endToStart,
+                        onDismissed: (direction){
+                          setState(() {
+                            cryptoData.removeAt(index);
+                          });
+                        },
+                        background: Container(color: Colors.red,
+                          child: Center(
+                            child: Text("삭제"),
+                          ),
+                        ),
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                          height: 220,
+                          width: double.maxFinite,
+                          child: Card(
+                            elevation: 5,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  top: BorderSide(
+                                      width: 2.0,
+                                      //color: cryptoData[index]['iconColor']
+                                      color: Theme.of(context).colorScheme.primary
                                   ),
-                                )
-                              ]),
+                                ),
+                                color: Colors.white,
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(7),
+                                child: Stack(children: <Widget>[
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, top: 5),
+                                            child: Column(
+                                              children: <Widget>[
+                                                Row(
+                                                  children: <Widget>[
+                                                    //cryptoIcon(cryptoData[index]),
+                                                    SizedBox(height: 10, width: 10,),
+                                                    cryptoNameSymbol(cryptoData[index]),
+                                                    // Spacer(),
+                                                    // cryptoChange(cryptoData[index]),
+                                                    // SizedBox(width: 10,),
+                                                    // changeIcon(cryptoData[index]),
+                                                    // SizedBox(width: 20,)
+                                                  ],
+                                                ),
+
+                                                SizedBox(height: 13,),
+
+                                                Row(
+                                                  children: <Widget>[
+                                                    Image.network(
+                                                        "http://img.marieclairekorea.com/2020/07/mck_5f22549fe9977.jpg"
+                                                        // ,height:
+                                                        ,width: 180),
+                                                    cryptoAmount(cryptoData[index])
+                                                  ],
+                                                )
+                                              ],
+                                            ))
+                                      ],
+                                    ),
+                                  )
+                                ]),
+                              ),
                             ),
                           ),
                         ),
