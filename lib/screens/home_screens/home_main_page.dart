@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:my_wedding_test/models/store/store_model.dart';
 import 'package:my_wedding_test/repository/store_repository.dart';
+import 'package:my_wedding_test/screens/home_screens/store_detail_page.dart';
 import 'package:my_wedding_test/widgets/product_card.dart';
 
 class HomeMainPage extends StatefulWidget {
@@ -111,6 +112,26 @@ class _HomeMainPageState extends State<HomeMainPage> {
             childAspectRatio: 8.0 / 9.0,
             children: ProductCard().buildGridProduct(
               stores: stores,
+              onPressed: (store) async {
+                bool isLike;
+                switch(index){
+                  case 0:
+                    isLike = await StoreRepository().isSStoreLiked(storeID: store.id);
+                    break;
+                  case 1:
+                    isLike = await StoreRepository().isDStoreLiked(storeID: store.id);
+                    break;
+                  case 2:
+                    isLike = await StoreRepository().isMStoreLiked(storeID: store.id);
+                    break;
+                }
+                Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => StoreDetailPage(store: store, isLike: isLike, category: index+1,))).then((value){
+                  storeInitState();
+                });
+              }
             ),
           ),
           SizedBox(
@@ -122,7 +143,14 @@ class _HomeMainPageState extends State<HomeMainPage> {
   }
 
   void storeInitState() async {
-    var initStores = await StoreRepository().getBestStudio();
+    var initStores;
+    if(index == 0){
+      initStores = await StoreRepository().getBestStudio();
+    }else if(index == 1){
+      initStores = await StoreRepository().getBestDress();
+    }else if(index == 2){
+      initStores = await StoreRepository().getBestMakeup();
+    }
     setState(() {
       stores = initStores;
     });

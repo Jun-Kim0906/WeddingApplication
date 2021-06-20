@@ -4,11 +4,11 @@ import 'package:my_wedding_test/models/store/store_model.dart';
 
 class ProductCard {
   List<Widget> buildGridProduct(
-      {List<Store> stores, VoidCallback onPressed}) {
+      {List<Store> stores, Function(Store) onPressed}) {
     return stores.map((store){
-      return GestureDetector(
-        onTap: onPressed,
-        child: Container(
+      return Container(
+        child: GestureDetector(
+          onTap: ()=> onPressed(store),
           child: Stack(
             fit: StackFit.expand,
             children: [

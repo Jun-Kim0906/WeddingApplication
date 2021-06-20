@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_wedding_test/models/store/store_model.dart';
 import 'package:my_wedding_test/repository/store_repository.dart';
+import 'package:my_wedding_test/screens/home_screens/store_detail_page.dart';
 import 'package:my_wedding_test/wedding_theme_data.dart';
 import 'package:my_wedding_test/widgets/product_card.dart';
 
@@ -13,6 +14,7 @@ class HomeStudioPage extends StatefulWidget {
 
 class _HomeStudioPageState extends State<HomeStudioPage> {
   List<Store> stores = [];
+
   ///order 1 : 이름순
   ///order 2 : 좋아요 순
   int order = 1;
@@ -62,8 +64,17 @@ class _HomeStudioPageState extends State<HomeStudioPage> {
             mainAxisSpacing: 10.0,
             childAspectRatio: 8.0 / 9.0,
             children: ProductCard().buildGridProduct(
-              stores: stores,
-            ),
+                stores: stores,
+                onPressed: (store) async {
+                  bool isLike = await StoreRepository().isSStoreLiked(storeID: store.id);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => StoreDetailPage(store: store, isLike: isLike, category: 1,))).then((value){
+                    storeInitState();
+                  });
+                }
+                ),
           ),
           SizedBox(
             height: 15.0,
@@ -90,33 +101,35 @@ class _HomeStudioPageState extends State<HomeStudioPage> {
                   leading: Text(
                     '이름순',
                     style: Theme.of(context).textTheme.bodyText2.copyWith(
-                      fontSize: 18,
-                      fontWeight: (order == 1)
-                          ? FontWeight.w600
-                          : FontWeight.normal,
-                      color:
-                      (order == 1) ? Theme.of(context).primaryColor : Colors.grey,
-                    ),
+                          fontSize: 14,
+                          fontWeight: (order == 1)
+                              ? FontWeight.w600
+                              : FontWeight.normal,
+                          color: (order == 1)
+                              ? Theme.of(context).primaryColor
+                              : Colors.grey,
+                        ),
                   ),
                   title: Text(''),
                   trailing: (order == 1)
                       ? Icon(
-                    Icons.check,
-                    color:
-                    (order == 1) ? Theme.of(context).primaryColor : Colors.grey,
-                  )
+                          Icons.check,
+                          color: (order == 1)
+                              ? Theme.of(context).primaryColor
+                              : Colors.grey,
+                        )
                       : Container(
-                    height: 1,
-                    width: 1,
-                  ),
+                          height: 1,
+                          width: 1,
+                        ),
                   onTap: () => {
-                    Navigator.pop(context),
-                    setState(() {
-                      order = 1;
-                      orderOption = '이름순';
-                      stores.sort((a,b)=>a.name.compareTo(b.name));
-                    }),
-                  }),
+                        Navigator.pop(context),
+                        setState(() {
+                          order = 1;
+                          orderOption = '이름순';
+                          stores.sort((a, b) => a.name.compareTo(b.name));
+                        }),
+                      }),
               Divider(
                 height: 2,
                 thickness: 2,
@@ -128,28 +141,30 @@ class _HomeStudioPageState extends State<HomeStudioPage> {
                 leading: Text(
                   '인기순',
                   style: Theme.of(context).textTheme.bodyText2.copyWith(
-                    fontSize: 18,
-                    fontWeight:
-                    (order == 2) ? FontWeight.w600 : FontWeight.normal,
-                    color: (order == 2) ? Theme.of(context).primaryColor : Colors.black,
-                  ),
+                        fontSize: 14,
+                        fontWeight:
+                            (order == 2) ? FontWeight.w600 : FontWeight.normal,
+                        color: (order == 2)
+                            ? Theme.of(context).primaryColor
+                            : Colors.black,
+                      ),
                 ),
                 title: Text(''),
                 trailing: (order == 2)
                     ? Icon(
-                  Icons.check,
-                  color: (order == 2) ? Color(0xFF219653) : Colors.black,
-                )
+                        Icons.check,
+                        color: (order == 2) ? Color(0xFF219653) : Colors.black,
+                      )
                     : Container(
-                  height: 1,
-                  width: 1,
-                ),
+                        height: 1,
+                        width: 1,
+                      ),
                 onTap: () => {
                   Navigator.pop(context),
                   setState(() {
                     order = 2;
                     orderOption = '인기순';
-                    stores.sort((a,b)=>b.likes.compareTo(a.likes));
+                    stores.sort((a, b) => b.likes.compareTo(a.likes));
                   }),
                 },
               ),
@@ -177,6 +192,9 @@ class _HomeStudioPageState extends State<HomeStudioPage> {
 
   void storeInitState() async {
     var initStores = await StoreRepository().getStudios();
+    if(order == 2){
+      initStores.sort((a, b) => b.likes.compareTo(a.likes));
+    }
     setState(() {
       stores = initStores;
     });

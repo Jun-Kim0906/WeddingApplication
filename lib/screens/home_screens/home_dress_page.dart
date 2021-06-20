@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_wedding_test/models/store/store_model.dart';
 import 'package:my_wedding_test/repository/store_repository.dart';
+import 'package:my_wedding_test/screens/home_screens/store_detail_page.dart';
 import 'package:my_wedding_test/wedding_theme_data.dart';
 import 'package:my_wedding_test/widgets/product_card.dart';
 
@@ -64,6 +65,15 @@ class _HomeDressPageState extends State<HomeDressPage> {
             childAspectRatio: 8.0 / 9.0,
             children: ProductCard().buildGridProduct(
               stores: stores,
+                onPressed: (store) async {
+                  bool isLike = await StoreRepository().isDStoreLiked(storeID: store.id);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => StoreDetailPage(store: store, isLike: isLike, category: 2,))).then((value){
+                    storeInitState();
+                  });
+                }
             ),
           ),
           SizedBox(
@@ -91,7 +101,7 @@ class _HomeDressPageState extends State<HomeDressPage> {
                   leading: Text(
                     '이름순',
                     style: Theme.of(context).textTheme.bodyText2.copyWith(
-                      fontSize: 18,
+                      fontSize: 14,
                       fontWeight: (order == 1)
                           ? FontWeight.w600
                           : FontWeight.normal,
@@ -129,7 +139,7 @@ class _HomeDressPageState extends State<HomeDressPage> {
                 leading: Text(
                   '인기순',
                   style: Theme.of(context).textTheme.bodyText2.copyWith(
-                    fontSize: 18,
+                    fontSize: 14,
                     fontWeight:
                     (order == 2) ? FontWeight.w600 : FontWeight.normal,
                     color: (order == 2) ? Theme.of(context).primaryColor : Colors.black,
@@ -178,6 +188,9 @@ class _HomeDressPageState extends State<HomeDressPage> {
 
   void storeInitState() async {
     var initStores = await StoreRepository().getDresses();
+    if(order == 2){
+      initStores.sort((a, b) => b.likes.compareTo(a.likes));
+    }
     setState(() {
       stores = initStores;
     });
