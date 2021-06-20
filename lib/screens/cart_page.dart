@@ -100,80 +100,74 @@ class _CartPageState extends State<CartPage> {
                       );
                     }),
               ),
-              SizedBox(
-                height: 10,
-              ),
-
               // Recepit 입니다.
-              Container(
-                child: Card(
-                  elevation: 5,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        top: BorderSide(
-                            width: 2.0,
-                            color: Colors.grey
-                        ),
+              Card(
+                elevation: 5,
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      top: BorderSide(
+                          width: 2.0,
+                          color: Colors.grey
                       ),
-                      color: Colors.white,
                     ),
-                    child: Padding(
-                      padding: EdgeInsets.all(7),
-                      child: Stack(children: <Widget>[
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Stack(
-                            children: <Widget>[
-                              Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 20, top: 5),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      RichText(
-                                          text: TextSpan(
-                                              text: 'Recepit',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold, color: Colors.black, fontSize: 30)
-                                          )
-                                      ),
-                                      SizedBox(height: 10,),
-                                      RichText(
-                                          text: TextSpan(
-                                              text: '상품개수: ${cryptoData.length}',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold, color: Colors.black, fontSize: 20)
-                                          )
-                                      ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          RichText(
-                                              text: TextSpan(
-                                                  text: 'Total: \$1000.809',
-                                                  style: TextStyle(
-                                                      fontWeight: FontWeight.bold, color: Colors.black, fontSize: 20)
-                                              )
-                                          ),
+                    color: Colors.white,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(7),
+                    child: Stack(children: <Widget>[
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Stack(
+                          children: <Widget>[
+                            Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 20, top: 5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    RichText(
+                                        text: TextSpan(
+                                            text: 'Recepit',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold, color: Colors.black, fontSize: 30)
+                                        )
+                                    ),
+                                    SizedBox(height: 10,),
+                                    RichText(
+                                        text: TextSpan(
+                                            text: '상품개수: ${cryptoData.length}',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold, color: Colors.black, fontSize: 20)
+                                        )
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        RichText(
+                                            text: TextSpan(
+                                                text: 'Total: \$1000.809',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold, color: Colors.black, fontSize: 20)
+                                            )
+                                        ),
 
-                                          ElevatedButton(
-                                            style: ButtonStyle(backgroundColor:  MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.primary)),
+                                        ElevatedButton(
+                                          style: ButtonStyle(backgroundColor:  MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.primary)),
 
-                                            onPressed: () {
-                                              print("Edit Button");
-                                            },
-                                            child: const Text("구매하기"),
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  ))
-                            ],
-                          ),
-                        )
-                      ]),
-                    ),
+                                          onPressed: () {
+                                            print("Edit Button");
+                                          },
+                                          child: const Text("구매하기"),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ))
+                          ],
+                        ),
+                      )
+                    ]),
                   ),
                 ),
               ),
