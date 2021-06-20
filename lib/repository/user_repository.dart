@@ -17,22 +17,26 @@ class UserRepository {
     if (results.isEmpty) {
       throw ('Incorrect ID or Password');
     }
+    conn.close();
     return results.first;
   }
 
   Future<bool> checkUser(String id) async {
     var conn = await MySqlConnection.connect(settings);
     Results results = await conn.query('select * from user where id = ?', [id]);
+    conn.close();
     return results.isEmpty;
   }
 
   Future<void> signUp({String id, String password, String name, String hp, String email}) async {
     var conn = await MySqlConnection.connect(settings);
     await conn.query('insert into user(id, pwd, name, hp, email) values (?,?,?,?,?)',[id,password,name,hp, email]);
+    conn.close();
   }
 
   Future<void> updateUser({String id,String password, String email, String hp, Blob image}) async{
     var conn = await MySqlConnection.connect(settings);
     await conn.query('update user set pwd = ?, email = ?, hp = ?, image = ? where id = ?',[password, email, hp, image, id]);
+    conn.close();
   }
 }
