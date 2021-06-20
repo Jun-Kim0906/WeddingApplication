@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_wedding_test/models/store/store_model.dart';
 import 'package:my_wedding_test/widgets/product_card.dart';
 
 class HomePackagePage extends StatefulWidget {
@@ -9,14 +10,17 @@ class HomePackagePage extends StatefulWidget {
 }
 
 class _HomePackagePageState extends State<HomePackagePage> {
-  bool isSelected = false;
+  List<Store> stores = [];
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15.0),
       child: ListView(
         children: [
-          SizedBox(height: 15.0,),
+          SizedBox(
+            height: 15.0,
+          ),
           GridView.count(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
@@ -25,13 +29,13 @@ class _HomePackagePageState extends State<HomePackagePage> {
             crossAxisSpacing: 10.0,
             mainAxisSpacing: 10.0,
             childAspectRatio: 8.0 / 9.0,
-            children: ProductCard().buildGridProduct(8, isSelected, (){
-              setState(() {
-                isSelected=!isSelected;
-              });
-            }),
+            children: ProductCard().buildGridProduct(
+              stores: stores
+                ),
           ),
-          SizedBox(height: 15.0,),
+          SizedBox(
+            height: 15.0,
+          ),
         ],
       ),
     );

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mysql1/mysql1.dart';
 
-
-
-
 var db =Mysql();
 List<String> storelist =[];
 List<int> ratinglist =[];
@@ -19,63 +16,12 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Search"),
-        centerTitle: true,
-        actions: [
-          IconButton(
-              icon:Icon(Icons.shopping_cart),
-            onPressed: (){
+    return ListView(
+      children: [
+        TextFormField(
 
-            },
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          searchBar(),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-                child: Text('Latest search',
-                  style: TextStyle(fontSize: 20,),
-                )
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Container(
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Column(
-                      children: [
-                        Text('recent1'),
-                        Text('recent2'),
-                      ],
-                    ),
-                  )
-
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text('Popular product',
-                  style: TextStyle(fontSize: 20,),
-                )
-            ),
-          ),
-          Expanded(child: ListViewPage())
-
-        ],
-      ),
+        )
+      ],
     );
   }
 }
