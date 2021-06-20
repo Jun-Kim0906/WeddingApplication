@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'test/crypto_data.dart';
 
-
-
-
 class ScrapPage extends StatefulWidget {
   const ScrapPage({Key key}) : super(key: key);
 
@@ -15,11 +12,9 @@ class _ScrapPageState extends State<ScrapPage> {
 
   // 1) 데이터를 여기서 불러오면 됍니다.
   var cryptoData = CryptoData.getData;
-  var last_index;
 
   @override
   Widget build(BuildContext context) {
-    last_index =  cryptoData.length - 1;
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -35,12 +30,10 @@ class _ScrapPageState extends State<ScrapPage> {
               'Scrap',
               style: TextStyle(color: Colors.black),
             )
-
         ),
 
 
         // 2) Row쪽에 보시면 따로 위젯을 만들어놨습니다. 이 부분에서 Product를 넣어주면 될것 같습니다.
-
         body: Container(
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -48,8 +41,7 @@ class _ScrapPageState extends State<ScrapPage> {
             children: <Widget>[
               Expanded(
                 child: ListView.builder(
-// scrollDirection: Axis.horizontal,
-                    itemCount: cryptoData.length, // 맨 마지막 데이터를 total로 잡아놓음.
+                    itemCount: cryptoData.length,
                     itemBuilder: (context, index) {
                       return Dismissible(
                         key: UniqueKey(),
@@ -65,18 +57,11 @@ class _ScrapPageState extends State<ScrapPage> {
                           height: 220,
                           width: double.maxFinite,
                           child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25.0),
+                            ),
                             elevation: 5,
                             child: Container(
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  top: BorderSide(
-                                      width: 2.0,
-                                      //color: cryptoData[index]['iconColor']
-                                      color: Theme.of(context).colorScheme.primary
-                                  ),
-                                ),
-                                color: Colors.white,
-                              ),
                               child: Padding(
                                 padding: EdgeInsets.all(7),
                                 child: Stack(children: <Widget>[
@@ -91,14 +76,8 @@ class _ScrapPageState extends State<ScrapPage> {
                                               children: <Widget>[
                                                 Row(
                                                   children: <Widget>[
-                                                    //cryptoIcon(cryptoData[index]),
                                                     SizedBox(height: 10, width: 10,),
                                                     cryptoNameSymbol(cryptoData[index]),
-                                                    // Spacer(),
-                                                    // cryptoChange(cryptoData[index]),
-                                                    // SizedBox(width: 10,),
-                                                    // changeIcon(cryptoData[index]),
-                                                    // SizedBox(width: 20,)
                                                   ],
                                                 ),
 
@@ -129,24 +108,8 @@ class _ScrapPageState extends State<ScrapPage> {
          ]
         )
     ),
-
     );
   }
-  //);
-
-  // Widget cryptoIcon(data) {
-  //   return Padding(
-  //     padding: const EdgeInsets.only(left: 15.0),
-  //     child: Align(
-  //         alignment: Alignment.centerLeft,
-  //         child: Icon(
-  //           data['icon'],
-  //           color: data['iconColor'],
-  //           size: 40,
-  //         )),
-  //   );
-  // }
-
   Widget cryptoNameSymbol(data) {
     return Align(
       alignment: Alignment.centerLeft,
@@ -196,7 +159,6 @@ class _ScrapPageState extends State<ScrapPage> {
         child: data['change'].contains('-')
             ? Icon(
           Icons.arrow_back_ios,
-          //Typicons.arrow_sorted_down,
           color: data['changeColor'],
           size: 30,
         )
@@ -224,17 +186,6 @@ class _ScrapPageState extends State<ScrapPage> {
                   color: Colors.grey,
                   fontSize: 35,
                 ),
-
-                // children: <TextSpan>[
-                //   TextSpan(
-                //       text: '\n0.1349',
-                //       style: TextStyle(
-                //           color: Colors.grey,
-                //           fontStyle: FontStyle.italic,
-                //           fontSize: 20,
-                //           fontWeight: FontWeight.bold)),
-                // ],
-
               ),
             ),
           ],
@@ -242,81 +193,4 @@ class _ScrapPageState extends State<ScrapPage> {
       ),
     );
   }
-
-
-
-
-
-
-
-
-
-
-
-
-// 되는거
-// return Scaffold(
-//   resizeToAvoidBottomInset: false,
-//   appBar: AppBar(
-//       centerTitle: true,
-//       leading: IconButton(
-//         icon: Icon(Icons.arrow_back),
-//         onPressed: () {
-//           Navigator.pop(context);
-//         },
-//       ),
-//       title: const Text(
-//         'Cart',
-//         style: TextStyle(color: Colors.black),
-//       )
-//
-//   ),
-//   body: Container(
-//     padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-//     height: 220,
-//     width: double.maxFinite,
-//     child: Card(
-//       elevation: 5,
-//       child:Padding(
-//         padding: EdgeInsets.all(7),
-//     child: Stack(
-//         children: <Widget>[
-//           Align(
-//             alignment: Alignment.centerRight,
-//             child: Stack(
-//               children: <Widget>[
-//                 Padding(
-//                     padding: const EdgeInsets.only(left: 10, top: 5),
-//                     child: Column(
-//                       children: <Widget>[
-//                         Row(
-//                           children: <Widget>[
-//                             Padding(
-//                               padding: const EdgeInsets.only(left: 15.0),
-//                               child: Align(
-//                                   alignment: Alignment.centerLeft,
-//                                   child: Icon(
-//                                     Icons.star,
-//                                     color: Colors.amber,
-//                                     size: 40,
-//                                   )),
-//                             )
-//                           ],
-//                         )
-//                       ],
-//                     ))
-//               ],
-//             ),
-//           )
-//         ]),
-//   ),
-//
-//
-//
-//     ),
-//   )
-//
-//
-// );
-//}
 }
