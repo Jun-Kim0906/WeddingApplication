@@ -44,7 +44,7 @@ class ReviewRepository {
     List<Review> reviews = [];
     var conn = await MySqlConnection.connect(settings);
     Results results =
-    await conn.query('select * from S_review ORDER BY time');
+    await conn.query('select * from S_review where S_ID = ? ORDER BY time',[sID]);
     conn.close();
     var resultRows = results.toList();
     resultRows.forEach((resultRow) {
@@ -63,7 +63,7 @@ class ReviewRepository {
     List<Review> reviews = [];
     var conn = await MySqlConnection.connect(settings);
     Results results =
-    await conn.query('select * from D_review ORDER BY time');
+    await conn.query('select * from D_review where S_ID = ? ORDER BY time',[sID]);
     conn.close();
     var resultRows = results.toList();
     resultRows.forEach((resultRow) {
@@ -82,7 +82,7 @@ class ReviewRepository {
     List<Review> reviews = [];
     var conn = await MySqlConnection.connect(settings);
     Results results =
-    await conn.query('select * from M_review ORDER BY time');
+    await conn.query('select * from M_review where S_ID = ? ORDER BY time',[sID]);
     conn.close();
     var resultRows = results.toList();
     resultRows.forEach((resultRow) {
