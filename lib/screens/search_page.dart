@@ -120,24 +120,29 @@ class searchitem extends SearchDelegate<Store>{
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final mylist = query.isEmpty? stores:
-        stores.where((p)=>p.name.startsWith(query)).toList();
+    final mylist =
+    stores.where((name){
+      return name.name.toLowerCase().contains(query.toLowerCase());
+    });
+
+    //final mylist = query.isEmpty? stores:
+     //   stores.where((p)=>p.name.startsWith(query)).toList();
     return mylist.isEmpty? Text("No Results Found...",style: TextStyle(fontSize: 20),):
     ListView.builder(
-      itemCount: stores.length,
-      itemBuilder: (context,index){
+      itemCount: mylist.length,
+      itemBuilder: (BuildContext context,int index){
         final Store listitem =stores[index];
         return ListTile(title:
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(listitem.name,style: TextStyle(fontSize: 20),),
+              Text(mylist.elementAt(index).name,style: TextStyle(fontSize: 20),),
               Divider()
             ],
           ),
           onTap: (){
           isLike = true;
-            query = stores[index].name;
+            query = mylist.elementAt(index).name;
             Navigator.push(
                 context,
                 MaterialPageRoute(
