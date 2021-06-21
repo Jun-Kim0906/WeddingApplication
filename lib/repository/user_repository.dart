@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:my_wedding_test/models/user/user_model.dart';
 import 'package:mysql1/mysql1.dart';
 
 class UserRepository {
@@ -38,5 +39,21 @@ class UserRepository {
     var conn = await MySqlConnection.connect(settings);
     await conn.query('update user set pwd = ?, email = ?, hp = ?, image = ? where id = ?',[password, email, hp, image, id]);
     conn.close();
+  }
+
+  Future<User> getUser({String id}) async{
+    var conn = await MySqlConnection.connect(settings);
+    Results results = await conn.query('select * from user where id = ?',[id]);
+    conn.close();
+    ResultRow result = results.first;
+
+    return User(
+      id: result.fields['id'],
+      pwd: result.fields['pwd'],
+      name: result.fields['name'],
+      hp: result.fields['hp'],
+      email: result.fields['email'],
+      image: result.fields['image'],
+    );
   }
 }

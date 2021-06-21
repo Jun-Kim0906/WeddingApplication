@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:intl/intl.dart';
+import 'package:my_wedding_test/models/review/review_model.dart';
 import 'package:my_wedding_test/models/store/store_model.dart';
+import 'package:my_wedding_test/models/user/user_model.dart';
+import 'package:my_wedding_test/repository/review_repository.dart';
 import 'package:my_wedding_test/repository/store_repository.dart';
+import 'package:my_wedding_test/repository/user_repository.dart';
 import 'package:my_wedding_test/screens/home_screens/create_review.dart';
 
 class StoreDetailPage extends StatefulWidget {
@@ -22,6 +28,9 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
   ///studio 1, dress 2, makeup 3
   int category;
 
+  List<Review> reviews = [];
+  List<User> writeUsers = [];
+
   @override
   void initState() {
     super.initState();
@@ -29,6 +38,7 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
     likes = widget.store.likes;
     isLike = widget.isLike;
     category = widget.category;
+    initReviews();
   }
 
   @override
@@ -51,8 +61,14 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
         child: Column(
           children: [
             Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.55,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width,
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height * 0.55,
               decoration: BoxDecoration(
                   image: DecorationImage(
                       image: store.imgUrl == ''
@@ -182,7 +198,9 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => CreateReview(store: store, category: category,)));
+                                    builder: (context) =>
+                                        CreateReview(
+                                          store: store, category: category,))).then((value){initReviews();});
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -231,12 +249,24 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
                         ),
                       ),
                     ],
+                  ),
+                  SizedBox(height: 20.0),
+                  Divider(thickness: 3.0,),
+                  SizedBox(height: 20.0,),
+                  Text('Review (${reviews.length})', style: TextStyle(
+                      fontSize: 17.0,
+                      fontWeight: FontWeight.w500
+                  ),),
+                  SizedBox(height: 20.0,),
+                  Column(
+                    children: reviewTile(),
                   )
                   // ListView.builder(
                   //   itemCount: productList.length,
                   //   itemBuilder: (BuildContext context,int index)=>ProductCard(context, index),
                   //   shrinkWrap: true,
                   // )
+
                 ],
               ),
             )
@@ -244,5 +274,93 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
         ),
       ),
     );
+  }
+
+
+  List<Widget> reviewTile() {
+    int count = -1;
+    return reviews.map((review) {
+      count ++;
+      return writeUsers.isNotEmpty?Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          CircleAvatar(
+            radius: 20,
+            backgroundColor: Colors.white,
+            backgroundImage: writeUsers[count]
+                .image == null? NetworkImage(
+                "https://cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/2TKUKXYMQF7ASZEUJLG7L4GM4I.jpg")
+                : MemoryImage(writeUsers[count].image.toBytes()),
+          ),
+          SizedBox(width: 15.0,),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(writeUsers[count].name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),),
+                      SizedBox(height: 5.0,),
+                      RatingBarIndicator(
+                        rating: review.rating,
+                        unratedColor: Color(0xffFFEEBC),
+                        itemBuilder: (context, index) => Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        ),
+                        itemCount: 5,
+                        itemSize: 20.0,
+                        direction: Axis.horizontal,
+                      ),
+                    ],
+                  ),
+                  SizedBox(width: 70.0,),
+                  Text(DateFormat('yyyy-MM-dd hh:mm').format(review.time), style: TextStyle(fontSize: 12.0, color: Colors.grey),),
+                ],
+              ),
+              SizedBox(height: 20.0,),
+              Text(review.content, maxLines: 10,),
+              SizedBox(height: 25.0,),
+            ],
+          )
+        ],
+      ):Container();
+    }).toList();
+  }
+
+
+
+  void initReviews() async {
+    List<Review> review = [];
+    List<User> users = [];
+    switch (category) {
+      case 1:
+        review = await ReviewRepository().getSReviews(sID: store.id);
+        break;
+      case 2:
+        review = await ReviewRepository().getDReviews(sID: store.id);
+        break;
+      case 3:
+        review = await ReviewRepository().getMReviews(sID: store.id);
+        break;
+    }
+    await Future.forEach(review, (element) async {
+      users.add(await UserRepository().getUser(id: element.uID));
+    });
+    // review.forEach((element) async {
+    //   users.add(await UserRepository().getUser(id: element.uID));
+    // });
+    setState(() {
+      reviews = review;
+      writeUsers = users;
+    });
   }
 }
