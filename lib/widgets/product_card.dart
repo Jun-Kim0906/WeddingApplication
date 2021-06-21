@@ -20,8 +20,8 @@ class ProductCard {
                             fit: BoxFit.fill,
                             image: store.imgUrl==''?AssetImage('assets/bufferCardImg.jpeg'):NetworkImage(store.imgUrl),
                             colorFilter: ColorFilter.mode(
-                                Colors.white.withOpacity(0.3),
-                                BlendMode.lighten))),
+                                Colors.black.withOpacity(0.4),
+                                BlendMode.darken))),
                   )),
               Align(
                 alignment: Alignment.bottomCenter,
@@ -34,7 +34,9 @@ class ProductCard {
                           fontFamily:
                           GoogleFonts.playfairDisplay().fontFamily,
                           fontWeight: FontWeight.w700,
-                          fontSize: 18.0),
+                          fontSize: 18.0,
+                        color: Colors.white
+                      ),
                     ),
                     SizedBox(
                       height: 10.0,
@@ -45,6 +47,7 @@ class ProductCard {
                         fontFamily: GoogleFonts.workSans().fontFamily,
                         fontSize: 14.0,
                         fontWeight: FontWeight.w500,
+                        color: Colors.white
                       ),
                     ),
                     SizedBox(
@@ -61,7 +64,7 @@ class ProductCard {
                             fontWeight: FontWeight.w500,
                           )).width +
                           8.0,
-                      color: Colors.black,
+                      color: Colors.white,
                     ),
                     SizedBox(height: 20.0),
                   ],

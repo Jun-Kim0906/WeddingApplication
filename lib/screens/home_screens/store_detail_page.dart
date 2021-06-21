@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:my_wedding_test/models/store/store_model.dart';
 import 'package:my_wedding_test/repository/store_repository.dart';
+import 'package:my_wedding_test/screens/home_screens/create_review.dart';
 
 class StoreDetailPage extends StatefulWidget {
-  const StoreDetailPage({Key key, this.store, this.isLike, this.category}) : super(key: key);
+  const StoreDetailPage({Key key, this.store, this.isLike, this.category})
+      : super(key: key);
   final Store store;
   final bool isLike;
   final int category;
@@ -16,6 +18,7 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
   Store store;
   bool isLike;
   int likes;
+
   ///studio 1, dress 2, makeup 3
   int category;
 
@@ -79,32 +82,38 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
                         children: [
                           IconButton(
                             onPressed: () async {
-                              if(isLike){
-                                switch(category){
+                              if (isLike) {
+                                switch (category) {
                                   case 1:
-                                    await StoreRepository().sStoreUnlikePressed(storeID: store.id);
+                                    await StoreRepository()
+                                        .sStoreUnlikePressed(storeID: store.id);
                                     break;
                                   case 2:
-                                    await StoreRepository().dStoreUnlikePressed(storeID: store.id);
+                                    await StoreRepository()
+                                        .dStoreUnlikePressed(storeID: store.id);
                                     break;
                                   case 3:
-                                    await StoreRepository().mStoreUnlikePressed(storeID: store.id);
+                                    await StoreRepository()
+                                        .mStoreUnlikePressed(storeID: store.id);
                                     break;
                                 }
                                 setState(() {
                                   isLike = false;
                                   likes -= 1;
                                 });
-                              }else{
-                                switch(category){
+                              } else {
+                                switch (category) {
                                   case 1:
-                                    await StoreRepository().sStoreLikePressed(storeID: store.id);
+                                    await StoreRepository()
+                                        .sStoreLikePressed(storeID: store.id);
                                     break;
                                   case 2:
-                                    await StoreRepository().dStoreLikePressed(storeID: store.id);
+                                    await StoreRepository()
+                                        .dStoreLikePressed(storeID: store.id);
                                     break;
                                   case 3:
-                                    await StoreRepository().mStoreLikePressed(storeID: store.id);
+                                    await StoreRepository()
+                                        .mStoreLikePressed(storeID: store.id);
                                     break;
                                 }
                                 setState(() {
@@ -169,7 +178,12 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
                         child: OutlinedButton(
                           style: OutlinedButton.styleFrom(
                               padding: EdgeInsets.symmetric(vertical: 13.0)),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CreateReview(store: store, category: category,)));
+                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
