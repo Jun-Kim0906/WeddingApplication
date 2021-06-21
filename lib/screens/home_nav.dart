@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:my_wedding_test/models/user/user_model.dart';
 import 'package:my_wedding_test/screens/cart_page.dart';
-import 'package:my_wedding_test/screens/detail_page.dart';
 import 'package:my_wedding_test/screens/home_page.dart';
 import 'package:my_wedding_test/screens/personal_page.dart';
 import 'package:my_wedding_test/screens/search_page.dart';
@@ -47,7 +46,6 @@ class _HomeNavState extends State<HomeNav> {
           children: <Widget>[
             HomePage(),
             SearchPage(),
-            DetailPage(),
             CartPage(),
             PersonalPage(),
           ],
@@ -70,8 +68,6 @@ class _HomeNavState extends State<HomeNav> {
             label: 'Search',
             icon: Icon(Icons.search_rounded),
           ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.favorite), label: 'Wish List'),
           BottomNavigationBarItem(
             label: 'Cart',
             icon: Icon(Icons.shopping_cart),

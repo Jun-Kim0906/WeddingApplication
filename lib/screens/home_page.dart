@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:my_wedding_test/screens/home_screens/home_dress_page.dart';
 import 'package:my_wedding_test/screens/home_screens/home_main_page.dart';
 import 'package:my_wedding_test/screens/home_screens/home_make_up_page.dart';
-import 'package:my_wedding_test/screens/home_screens/home_package_page.dart';
 import 'package:my_wedding_test/screens/home_screens/home_studio_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 5,
+      length: 4,
       child: Scaffold(
         appBar: new PreferredSize(
           preferredSize: Size.fromHeight(kToolbarHeight),
@@ -40,7 +39,6 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Tab(text: 'Dress'),
                       Tab(text: 'Make up'),
-                      Tab(text: 'Packages'),
                     ],
                   ),
                 ],
@@ -54,7 +52,6 @@ class _HomePageState extends State<HomePage> {
             HomeStudioPage(),
             HomeDressPage(),
             HomeMakeUpPage(),
-            HomePackagePage(),
           ],
         ),
       ),
